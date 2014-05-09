@@ -3,53 +3,13 @@ import os
 import signal
 import sys
 import random
-
+import subprocess
 
 #########################
 #gets file names from specified dir
 #x = os.listdir("\\AWESOMEPCV2\Users\Public\AWESOME DOPE MOVIE FOLDER")
 #x =  os.getcwd()
 #print x
-def doStuff():
-    myInput = raw_input("pleaseEnterShit ")
-
-    tvShowNamesFolder = (os.listdir(os.getcwd()))
-
-    for showTitleFolder in tvShowNamesFolder:
-        if showTitleFolder.lower() == myInput.lower():
-                print (showTitleFolder.lower()+ " is an available show!")
-
-                os.chdir(os.curdir + "/" + myInput)
-                
-                pathTousersShowInputFolder = os.path.abspath(os.curdir)
-                print pathTousersShowInputFolder
-                writeFileStuff()
-                usersShowInputFolder = (os.listdir(pathTousersShowInputFolder))
-
-    #walking scrip area######
-                for root, dirs, files in os.walk(pathTousersShowInputFolder):
-                    for name in dirs:
-                        try:
-                            pathToSeason = (pathTousersShowInputFolder+ "/" +name)
-                          #  print pathToSeason
-                            x = os.listdir(pathToSeason)
-                            for y in x:
-                                if y != "Thumbs.db":
-                                    fullPath = (pathToSeason + "/" + y)
-                                   # print y
-                                    #print fullPath
-                                
-                            #os.rmdir(os.path.join(root, name))
-                        except WindowsError:
-                            print 'Skipping', os.path.join(root, name)
-################
-
-            
-     #       for firstDirDown in usersShowInputFolder:
-     #           print firstDirDown
-   # else:
-       # print ("sorry, that is not an available show.")
-
 
 
 def getFileStuff():
@@ -98,24 +58,53 @@ def writeFileStuff():
         print('some file shit broke')
         sys.exit()
     f.close()
-        
-#doStuff()
-writeFileStuff()
-#myArr=[0,1,2,3]
-#random.shuffle(myArr)
-#print myArr
-#arr = getFileStuff()
-#print arr
-##random.shuffle(arr)
-#print arr
+
     
 #print os.path.abspath(os.curdir)
 #os.chdir(os.curdir + "/Star Trek/")
 #print os.path.abspath(os.curdir)
-        
-#works for opening a single file..NOT playlist yet..should be able to do this
-#p = subprocess.Popen(["C:/Program Files (x86)/VideoLAN/VLC/vlc.exe","C:\\\Users\Alex\Desktop\Anchorman2.mp4"])
-#time.sleep(10)
-#p = subprocess.Popen(["C:/Program Files (x86)/VideoLAN/VLC/vlc.exe","C:\\\Users\Alex\Desktop\Anchorman2.mp4"])
-#time.sleep(10)
-#p.kill()
+
+
+#play an single file, hardcoded currently
+def playFile(filePath):
+#   p = subprocess.Popen([filePath])
+    p = subprocess.Popen(["C:/Program Files (x86)/VideoLAN/VLC/vlc.exe","C:\\\Users\Alex\Desktop\Anchorman2.mp4"])
+
+
+
+def main():
+    myInput = raw_input("Enter movie title: ")
+
+    tvShowNamesFolder = (os.listdir(os.getcwd()))
+
+    for showTitleFolder in tvShowNamesFolder:
+        if showTitleFolder.lower() == myInput.lower():
+                print (showTitleFolder.lower()+ " is an available show!")
+
+                #os.chdir(os.curdir + "/" + myInput)
+                
+                pathTousersShowInputFolder = os.path.abspath(os.curdir)
+                print pathTousersShowInputFolder
+                writeFileStuff()
+                usersShowInputFolder = (os.listdir(pathTousersShowInputFolder))
+
+    #walking scrip area######
+                for root, dirs, files in os.walk(pathTousersShowInputFolder):
+                    for name in dirs:
+                        try:
+                            pathToSeason = (pathTousersShowInputFolder+ "/" +name)
+                          #  print pathToSeason
+                            x = os.listdir(pathToSeason)
+                            for y in x:
+                                if y != "Thumbs.db":
+                                    fullPath = (pathToSeason + "/" + y)
+                                   # print y
+                                    #print fullPath
+                                
+                            #os.rmdir(os.path.join(root, name))
+                        except WindowsError:
+                            print 'Skipping', os.path.join(root, name)
+
+#doStuff()
+
+
