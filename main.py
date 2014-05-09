@@ -70,10 +70,23 @@ def playFile(filePath):
 #   p = subprocess.Popen([filePath])
     p = subprocess.Popen(["C:/Program Files (x86)/VideoLAN/VLC/vlc.exe","C:\\\Users\Alex\Desktop\Anchorman2.mp4"])
 
+def showAvailable(showName):
+    showAvailable = False
+    tvShowNamesFolder = (os.listdir(os.getcwd()))
 
+    for showTitleFolder in tvShowNamesFolder:
+        if showTitleFolder.lower() == showName.lower():
+            showAvailable = True
+
+    return showAvailable
 
 def main():
-    myInput = raw_input("Enter movie title: ")
+    showNameInput = raw_input("Enter movie title: ")
+
+    if showAvailable(showNameInput):
+        print (showNameInput + " is an available show!")
+    else:
+        print (showNameInput + " is NOT an available show!")
 
     tvShowNamesFolder = (os.listdir(os.getcwd()))
 
@@ -106,5 +119,3 @@ def main():
                             print 'Skipping', os.path.join(root, name)
 
 #doStuff()
-
-
