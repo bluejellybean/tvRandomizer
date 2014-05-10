@@ -81,7 +81,11 @@ def showAvailable(showName):
     return showAvailable
 
 def main():
-    showNameInput = raw_input("Enter movie title: ")
+    tv = TvShow()
+    
+    tv.getUserInput()
+    
+    
 
     handleUserInput(showNameInput)
 
@@ -118,50 +122,58 @@ def main():
 
 #doStuff()
 
-def getUserArgFromUserInput(userInput):
-    dashIndex = userInput.index("-")
-    userArg = userInput[dashIndex:]
-    return userArg
-                            
-def getShowTitleFromUserInput(userInput):
-    if "-" in userInput:
-        dashIndex = userInput.index("-")
-        if (userInput[dashIndex - 1]) == " ":
-            justShowTitle = userInput[0:dashIndex - 1]
-            return justShowTitle
-        else:
-            justShowTitle = userInput[0:dashIndex]
-            return justShowTitle
-    else:
-        return userInput
-
-def handleUserInput(userInput):
-    if "-" in userInput:
-        print(getUserArgFromUserInput(userInput))
-    print(getShowTitleFromUserInput(userInput))
-                            
-#handleUserInput("test -restartShow")
 
 #main()
 #better name for this? it will end up being the main class holding
 #data for dirs, tv names, user args and such
 class TvShows:
-    def __init__(self, showNameInput, userArgumentInput = False):
-        self.showName = showNameInput
-        self.userArgument = userArgumentInput
+    def __init__(self):
+        self.userInput = ""
+        self.showTitle = ""
+        self.userArgument = ""
         self.showDirectory = ""
     
     def randomizeShowOrder(self):
-        print self.showName
+        print self.showTitle
 
     def setShowDirectory(self):
         print self.showDirectory
 
-    def handleUserArguents(slef):
+    def handleUserArguents(self):
         print self.userArgument
         #"switch" here?
 
+    def __setUserArgument(self):
+        dashIndex = self.userInput.index("-")
+        userArg = self.userInput[dashIndex:]
+        self.userArgument = userArg
+
+    def __setShowTitle(self):
+        if "-" in self.userInput:
+            dashIndex = self.userInput.index("-")
+            if (self.userInput[dashIndex - 1]) == " ":
+                self.showTitle = self.userInput[0:dashIndex - 1]
+            else:
+                self.showTitle = self.userInput[0:dashIndex]
+        else:
+            self.showTitle = self.userInput
+
+    def __handleUserInput(self):
+        if "-" in self.userInput:
+            self.__setUserArgument()
+        self.__setShowTitle()
+      
+
+    def getUserInput(self):
+        self.userInput = raw_input("Enter movie title: ")
+        self.__handleUserInput()
+
 #x = TvShows("test", "-randomize")
+
+tv = TvShows()
+tv.getUserInput()
+
+
 
 
 
