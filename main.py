@@ -83,15 +83,13 @@ def showAvailable(showName):
 def main():
     showNameInput = raw_input("Enter movie title: ")
 
-    if showAvailable(showNameInput):
-        print (showNameInput + " is an available show!")
-    else:
-        print (showNameInput + " is NOT an available show!")
+    handleUserInput(showNameInput)
+
 
     tvShowNamesFolder = (os.listdir(os.getcwd()))
 
     for showTitleFolder in tvShowNamesFolder:
-        if showTitleFolder.lower() == myInput.lower():
+        if showTitleFolder.lower() == showNameInput.lower():
                 print (showTitleFolder.lower()+ " is an available show!")
 
                 #os.chdir(os.curdir + "/" + myInput)
@@ -142,8 +140,35 @@ def handleUserInput(userInput):
         print(getUserArgFromUserInput(userInput))
     print(getShowTitleFromUserInput(userInput))
                             
-handleUserInput("test -restartShow")
+#handleUserInput("test -restartShow")
+
+#main()
+#better name for this? it will end up being the main class holding
+#data for dirs, tv names, user args and such
+class TvShows:
+    def __init__(self, showNameInput, userArgumentInput = False):
+        self.showName = showNameInput
+        self.userArgument = userArgumentInput
+        self.showDirectory = ""
+    
+    def randomizeShowOrder(self):
+        print self.showName
+
+    def setShowDirectory(self):
+        print self.showDirectory
+
+    def handleUserArguents(slef):
+        print self.userArgument
+        #"switch" here?
+
+#x = TvShows("test", "-randomize")
 
 
 
 
+
+
+
+
+
+    
