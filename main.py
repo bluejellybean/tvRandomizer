@@ -119,3 +119,31 @@ def main():
                             print 'Skipping', os.path.join(root, name)
 
 #doStuff()
+
+def getUserArgFromUserInput(userInput):
+    dashIndex = userInput.index("-")
+    userArg = userInput[dashIndex:]
+    return userArg
+                            
+def getShowTitleFromUserInput(userInput):
+    if "-" in userInput:
+        dashIndex = userInput.index("-")
+        if (userInput[dashIndex - 1]) == " ":
+            justShowTitle = userInput[0:dashIndex - 1]
+            return justShowTitle
+        else:
+            justShowTitle = userInput[0:dashIndex]
+            return justShowTitle
+    else:
+        return userInput
+
+def handleUserInput(userInput):
+    if "-" in userInput:
+        print(getUserArgFromUserInput(userInput))
+    print(getShowTitleFromUserInput(userInput))
+                            
+handleUserInput("test -restartShow")
+
+
+
+
