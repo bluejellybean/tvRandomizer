@@ -131,15 +131,37 @@ class TvShows:
         self.userInput = ""
         self.showTitle = ""
         self.userArgument = ""
-        self.showDirectory = "//AWESOMEPCV2/Users/Public/AWESOME DOPE MOVIE FOLDER/Dope tv shows"
+        self.showDirectory = "//AWESOMEPCV2/Users/Public/AWESOME DOPE MOVIE FOLDER/Dope tv shows/"
         self.saveDirectory = "//AWESOMEPCV2/Users/Public/AWESOME DOPE MOVIE FOLDER/Dope tv shows/__randomSaves/"
+        self.saveFile = ""
+        self.fullEpisodeList = []
     
+    def __getFilesInTvShow(self):
+        print('here')
+        for root, dirs, files in os.walk(self.showDirectory + self.showTitle):
+            for name in dirs:
+                try:
+                    seasons = os.listdir(self.showDirectory + self.showTitle+ '/' + name)
+                    for episode in seasons:
+                        if episode != "Thumbs.db":
+                            self.fullEpisodeList.append(episode)
+
+                except WindowsError:
+                    print 'Skipping', os.path.join(root, name)
+
+    def __saveShowListToFile(self):
+        f = open(self.saveFile, 'w')
+        for episode in self.fullEpisodeList:
+            f.write(episode+'\n')
+           # newLine = ''.join([string,'\n'])
+            #f.write(newLine)
+        f.close()
+
     def __randomizeShowOrder(self):
-        print self.showTitle
-        if os.path.exists(self.saveDirectory + self.showTitle + '.txt'):
-            print ('read file, randomize, writefile')
-        else:
-            print ('create array, randomize order, writefile')
+        self.__getFilesInTvShow()
+        random.shuffle(self.fullEpisodeList)
+
+        self.__saveShowListToFile()
 
     #this should maybe allow the user to change dir, hardcoded to my own dir atm
     def setShowDirectory(self):
@@ -177,12 +199,16 @@ class TvShows:
         if "-" in self.userInput:
             self.__setUserArgument()
         self.__setShowTitle()
+        self.__setSaveFile()
+
+    def __setSaveFile(self):
+        self.saveFile = self.saveDirectory + self.showTitle + ".txt"
       
 
     def getUserInput(self):
         #self.userInput = raw_input("Enter movie title: ")
         #temp hardcoded because sublimes compiler can't handle input
-        self.userInput = "star trek -randomize"
+        self.userInput = "staR trek -randomize"
         self.__setUserInputs()
 
 #x = TvShows("test", "-randomize")
