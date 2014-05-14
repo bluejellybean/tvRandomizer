@@ -39,9 +39,9 @@ def makeSickDataforWriteFileStuff(showTitle, showEpisodes):
 
 
 
-name = "star trek"
-shows = ["spoklove.avi", "cobainletu-s.jpg"]
-makeSickDataforWriteFileStuff(name, shows)
+#name = "star trek"
+#shows = ["spoklove.avi", "cobainletu-s.jpg"]
+#makeSickDataforWriteFileStuff(name, shows)
 def writeFileStuff():
     x = os.getcwd()
     y = x + "/star trek/ranMovie.txt"
@@ -131,22 +131,37 @@ class TvShows:
         self.userInput = ""
         self.showTitle = ""
         self.userArgument = ""
-        self.showDirectory = ""
+        self.showDirectory = "//AWESOMEPCV2/Users/Public/AWESOME DOPE MOVIE FOLDER/Dope tv shows"
+        self.saveDirectory = "//AWESOMEPCV2/Users/Public/AWESOME DOPE MOVIE FOLDER/Dope tv shows/__randomSaves/"
     
-    def randomizeShowOrder(self):
+    def __randomizeShowOrder(self):
         print self.showTitle
+        if os.path.exists(self.saveDirectory + self.showTitle + '.txt'):
+            print ('read file, randomize, writefile')
+        else:
+            print ('create array, randomize order, writefile')
 
+    #this should maybe allow the user to change dir, hardcoded to my own dir atm
     def setShowDirectory(self):
         print self.showDirectory
+        #print('love')
 
     def handleUserArguents(self):
         print self.userArgument
+        if self.userArgument == "-randomize":
+            self.__randomizeShowOrder()
         #"switch" here?
 
     def __setUserArgument(self):
         dashIndex = self.userInput.index("-")
         userArg = self.userInput[dashIndex:]
         self.userArgument = userArg
+
+    def startShow(self):
+        if self.userArgument == "":
+            print('play.vlc')
+        else:
+            self.handleUserArguents()
 
     def __setShowTitle(self):
         if "-" in self.userInput:
@@ -158,25 +173,30 @@ class TvShows:
         else:
             self.showTitle = self.userInput
 
-    def __handleUserInput(self):
+    def __setUserInputs(self):
         if "-" in self.userInput:
             self.__setUserArgument()
         self.__setShowTitle()
       
 
     def getUserInput(self):
-        self.userInput = raw_input("Enter movie title: ")
-        self.__handleUserInput()
+        #self.userInput = raw_input("Enter movie title: ")
+        #temp hardcoded because sublimes compiler can't handle input
+        self.userInput = "star trek -randomize"
+        self.__setUserInputs()
 
 #x = TvShows("test", "-randomize")
+
 
 tv = TvShows()
 tv.getUserInput()
 
+tv.startShow()
 
 
 
-
+#print(os.listdir("\\AWESOMEPCV2\Users\Public\AWESOME DOPE MOVIE FOLDER\Dope tv shows"))
+print(os.listdir("//AWESOMEPCV2/Users/Public/AWESOME DOPE MOVIE FOLDER/Dope tv shows"))
 
 
 
