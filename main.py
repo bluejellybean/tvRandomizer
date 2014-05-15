@@ -18,7 +18,7 @@ class TvShows:
         self.fullEpisodeList = []
     
     def __getFilesInTvShow(self):
-        print('here')
+
         for root, dirs, files in os.walk(self.showDirectory + self.showTitle):
             for name in dirs:
                 try:
@@ -31,23 +31,25 @@ class TvShows:
                     print 'Skipping', os.path.join(root, name)
 
     def __saveShowListToFile(self):
+
         f = open(self.saveFile, 'w')
         for episode in self.fullEpisodeList:
             f.write(episode+'\n')
         f.close()
 
     def __openShowListFromFile(self):
+
         try:
             f = open(self.saveFile, 'r')         ####a###########create text file, change path. 
             self.fullEpisodeList = f.read().splitlines()
             f.close()
-            print self.fullEpisodeList
 
         except:
-            print('unable to read from file')
+            print('unable to read from save file...')
             sys.exit()
 
     def __randomizeShowOrder(self):
+
         self.__getFilesInTvShow()
         random.shuffle(self.fullEpisodeList)
 
@@ -55,26 +57,28 @@ class TvShows:
 
     #this should maybe allow the user to change dir, hardcoded to my own dir atm
     def setShowDirectory(self):
+
         print self.showDirectory
-        #print('love')
 
     def handleUserArguents(self):
-        print self.userArgument
+
         if self.userArgument == "-randomize":
             self.__randomizeShowOrder()
         #"switch" here?
 
     def __setUserArgument(self):
+
         dashIndex = self.userInput.index("-")
         userArg = self.userInput[dashIndex:]
         self.userArgument = userArg
 
     #TODO: change this to work with next episode
     def playSingleEpsiode(self):
+
         p = subprocess.Popen(["C:/Program Files (x86)/VideoLAN/VLC/vlc.exe","C:\\\Users\Alex\Desktop\Anchorman2.mp4", '--play-and-exit', '--fullscreen'], shell=True)
 
-
     def startShow(self):
+
         if self.userArgument == "":
             print('read file, play newest file, appendpop to end')
             self.__openShowListFromFile()
@@ -82,6 +86,7 @@ class TvShows:
             self.handleUserArguents()
 
     def __setShowTitle(self):
+
         if "-" in self.userInput:
             dashIndex = self.userInput.index("-")
             if (self.userInput[dashIndex - 1]) == " ":
@@ -92,16 +97,19 @@ class TvShows:
             self.showTitle = self.userInput
 
     def __setUserInputs(self):
+
         if "-" in self.userInput:
             self.__setUserArgument()
         self.__setShowTitle()
         self.__setSaveFile()
 
     def __setSaveFile(self):
+
         self.saveFile = self.saveDirectory + self.showTitle + ".txt"
       
 
     def getAndSetUserInput(self):
+
         #self.userInput = raw_input("Enter movie title: ")
         #temp hardcoded because sublimes compiler can't handle input
         self.userInput = "Star trek"
@@ -113,9 +121,3 @@ tv = TvShows()
 tv.getAndSetUserInput()
 
 tv.startShow()
-
-
-
-
-
-    
