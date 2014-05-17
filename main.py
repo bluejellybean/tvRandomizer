@@ -12,20 +12,25 @@ class TvShows:
         self.userInput = ""
         self.showTitle = ""
         self.userArgument = ""
-        self.showDirectory = "//AWESOMEPCV2/Users/Public/AWESOME DOPE MOVIE FOLDER/Dope tv shows/"
-        self.saveDirectory = self.showDirectory + "__randomSaves/"
+        self.showDirectory = r"Z:\\Public\\AWESOME DOPE MOVIE FOLDER\\Dope TV Shows\\"
+        self.saveDirectory = self.showDirectory + "__randomSaves\\"
         self.saveFile = ""
-        self.fullEpisodeList = []
+        self.fullEpisodeList = []               #
+        self.nextEpisodeToPlay = ""
     
     def __getFilesInTvShow(self):
 
         for root, dirs, files in os.walk(self.showDirectory + self.showTitle):
             for name in dirs:
                 try:
+                   
                     seasons = os.listdir(self.showDirectory + self.showTitle+ '/' + name)
+                    
                     for episode in seasons:
+                         
                         if episode != "Thumbs.db":
-                            self.fullEpisodeList.append(episode)
+                            eiposdePath = name + '\\' + episode 
+                            self.fullEpisodeList.append(eiposdePath)
 
                 except WindowsError:
                     print 'Skipping', os.path.join(root, name)
@@ -42,6 +47,8 @@ class TvShows:
         try:
             f = open(self.saveFile, 'r')         ####a###########create text file, change path. 
             self.fullEpisodeList = f.read().splitlines()
+            self.nextEpisodeToPlay = self.fullEpisodeList[0]
+            print self.nextEpisodeToPlay
             f.close()
 
         except:
@@ -75,13 +82,20 @@ class TvShows:
     #TODO: change this to work with next episode
     def playSingleEpsiode(self):
 
-        p = subprocess.Popen(["C:/Program Files (x86)/VideoLAN/VLC/vlc.exe","C:\\\Users\Alex\Desktop\Anchorman2.mp4", '--play-and-exit', '--fullscreen'], shell=True)
+        episodePath =self.showDirectory + self.showTitle + '\\' + self.nextEpisodeToPlay
+       
+        p = subprocess.Popen(["C:/Program Files (x86)/VideoLAN/VLC/vlc.exe",episodePath, '--play-and-exit', '--fullscreen'])
 
     def startShow(self):
 
         if self.userArgument == "":
             print('read file, play newest file, appendpop to end')
             self.__openShowListFromFile()
+            self.fullEpisodeList.append(self.fullEpisodeList.pop(0))
+            self.__saveShowListToFile()
+
+            self.playSingleEpsiode()
+
         else:
             self.handleUserArguents()
 
@@ -112,7 +126,7 @@ class TvShows:
 
         #self.userInput = raw_input("Enter movie title: ")
         #temp hardcoded because sublimes compiler can't handle input
-        self.userInput = "Star trek"
+        self.userInput = "Family Guy"
         self.__setUserInputs()
 
 
@@ -121,3 +135,5 @@ tv = TvShows()
 tv.getAndSetUserInput()
 
 tv.startShow()
+
+    
